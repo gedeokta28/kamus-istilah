@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:kamus_istilah/presentation/pages/started_page.dart';
+import 'package:kamus_istilah/presentation/pages/splash_page.dart';
 import 'package:kamus_istilah/routes/routes.dart';
 import 'package:kamus_istilah/utility/helper.dart';
 import 'package:kamus_istilah/utility/injection.dart';
+import 'package:kamus_istilah/utility/session_helper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await init();
 
-    runApp(const MyApp());
+    locator.isReady<Session>().then((_) async {
+      runApp(const MyApp());
+    });
   } catch (e) {
     debugPrint(e.toString());
   }
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [routeObserver],
         // Initialize routes
         onGenerateRoute: generateRoute,
-        home: const StartedPage(),
+        home: const SplashPage(),
         debugShowCheckedModeBanner: false,
         builder: FlutterSmartDialog.init());
   }

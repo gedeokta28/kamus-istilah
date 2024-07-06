@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kamus_istilah/presentation/pages/started_page.dart';
+import 'package:kamus_istilah/presentation/widgets/custom_dialog_logout.dart';
 import 'package:kamus_istilah/static/assets.dart';
 import 'package:kamus_istilah/static/colors.dart';
+import 'package:kamus_istilah/utility/helper.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -17,6 +20,25 @@ class HomePage extends StatelessWidget {
           'Beranda',
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          InkWell(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => CustomLogoutDialog(
+                    positiveAction: () async {
+                      await sessionLogOut().then((_) => Navigator.of(context)
+                          .pushNamedAndRemoveUntil(
+                              StartedPage.routeName, (route) => false));
+                    },
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Icon(Icons.logout_outlined),
+              ))
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 50, horizontal: 10),
