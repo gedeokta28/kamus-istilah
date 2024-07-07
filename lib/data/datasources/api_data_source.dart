@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:kamus_istilah/data/models/login_response_model.dart';
+import 'package:kamus_istilah/data/models/register_response_model.dart';
 
 abstract class ApiDataSource {
   Future<LoginResponseModel> doLogin(FormData data);
+  Future<RegisterResponseModel> doRegister(FormData data);
 }
 
 class ApiDataSourceImplementation implements ApiDataSource {
@@ -20,6 +22,22 @@ class ApiDataSourceImplementation implements ApiDataSource {
         data: data,
       );
       final model = LoginResponseModel.fromJson(response.data);
+      return model;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<RegisterResponseModel> doRegister(FormData data) async {
+    String url = 'register/regis';
+
+    try {
+      final response = await dio.post(
+        url,
+        data: data,
+      );
+      final model = RegisterResponseModel.fromJson(response.data);
       return model;
     } catch (e) {
       rethrow;

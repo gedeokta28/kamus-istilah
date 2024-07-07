@@ -5,7 +5,9 @@ import 'package:kamus_istilah/data/datasources/api_data_source.dart';
 import 'package:kamus_istilah/data/repositories/api_repo_impl.dart';
 import 'package:kamus_istilah/domain/repositories/api_repository.dart';
 import 'package:kamus_istilah/domain/usecases/do_login.dart';
+import 'package:kamus_istilah/domain/usecases/do_register.dart';
 import 'package:kamus_istilah/presentation/providers/login_provider.dart';
+import 'package:kamus_istilah/presentation/providers/register_provider.dart';
 import 'package:kamus_istilah/utility/session_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,8 +35,12 @@ Future<void> init() async {
   //Usecase
   locator.registerLazySingleton<DoLogin>(
       () => DoLogin(repository: locator(), session: locator()));
+  locator.registerLazySingleton<DoRegister>(
+      () => DoRegister(repository: locator()));
 
   //Providers
   locator
       .registerFactory<LoginProvider>(() => LoginProvider(doLogin: locator()));
+  locator.registerFactory<RegisterProvider>(
+      () => RegisterProvider(doRegister: locator()));
 }
