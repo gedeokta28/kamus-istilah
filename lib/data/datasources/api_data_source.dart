@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:kamus_istilah/data/models/istilah_response_model.dart';
 import 'package:kamus_istilah/data/models/login_response_model.dart';
 import 'package:kamus_istilah/data/models/register_response_model.dart';
 
 abstract class ApiDataSource {
   Future<LoginResponseModel> doLogin(FormData data);
   Future<RegisterResponseModel> doRegister(FormData data);
+  Future<IstilahResponseModel> getDaftarIstilah();
 }
 
 class ApiDataSourceImplementation implements ApiDataSource {
@@ -38,6 +40,21 @@ class ApiDataSourceImplementation implements ApiDataSource {
         data: data,
       );
       final model = RegisterResponseModel.fromJson(response.data);
+      return model;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<IstilahResponseModel> getDaftarIstilah() async {
+    String url = 'Kegiatan/api_kegiatan';
+
+    try {
+      final response = await dio.get(
+        url,
+      );
+      final model = IstilahResponseModel.fromJson(response.data);
       return model;
     } catch (e) {
       rethrow;

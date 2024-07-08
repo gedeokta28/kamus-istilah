@@ -98,7 +98,7 @@ class RegisterPage extends StatelessWidget {
                                           Navigator.pop(context);
                                         },
                                         text:
-                                            'Username ini sudah dipakai. Coba username lain!',
+                                            'Username ini sudah dipakai. \n Coba username lain!',
                                         color: Colors.black,
                                       ),
                                     );

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:kamus_istilah/data/datasources/api_data_source.dart';
+import 'package:kamus_istilah/data/models/istilah_response_model.dart';
 import 'package:kamus_istilah/data/models/login_response_model.dart';
 import 'package:kamus_istilah/data/models/register_response_model.dart';
 import 'package:kamus_istilah/domain/repositories/api_repository.dart';
@@ -26,6 +27,16 @@ class ApiRepoImpl implements ApiRepository {
       FormData formData) async {
     try {
       final data = await dataSource.doRegister(formData);
+      return Right(data);
+    } on DioError catch (e) {
+      return Left(ServerFailure(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, IstilahResponseModel>> getDaftarIstilah() async {
+    try {
+      final data = await dataSource.getDaftarIstilah();
       return Right(data);
     } on DioError catch (e) {
       return Left(ServerFailure(message: e.message));
