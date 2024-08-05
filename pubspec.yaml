@@ -43,6 +43,8 @@ dependencies:
   equatable: ^2.0.3
   shared_preferences: ^2.0.13
   fluttertoast: ^8.0.9
+  cached_network_image: ^3.3.1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

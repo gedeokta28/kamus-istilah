@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kamus_istilah/data/models/istilah_response_model.dart';
 import 'package:kamus_istilah/presentation/widgets/custom_search_bar.dart';
 import 'package:kamus_istilah/static/colors.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DaftarIstilahPage extends StatefulWidget {
   final List<IstilahData> dataIstilah;
@@ -87,79 +89,139 @@ class _DaftarIstilahPageState extends State<DaftarIstilahPage> {
                                 borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(16))),
                             builder: (context) => DraggableScrollableSheet(
-                              initialChildSize: 0.4,
-                              minChildSize: 0.2,
+                              initialChildSize: 0.5,
+                              minChildSize: 0.4,
                               maxChildSize: 0.75,
                               expand: false,
-                              builder: (_, controller) => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Icon(
-                                      Icons.remove,
-                                      color: Colors.grey[600],
+                              builder: (_, controller) => SingleChildScrollView(
+                                controller: controller,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Center(
+                                      child: Icon(
+                                        Icons.remove,
+                                        color: Colors.grey[600],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 15),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Istilah:",
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(
-                                          height: 3,
-                                        ),
-                                        Text(
-                                          _foundIstilah[index].namaIstilah,
-                                          style: TextStyle(
-                                            fontSize: 13,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 15),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Center(
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        FullScreenImage(
+                                                      imageUrl:
+                                                          "https://kamus-istilah-it.my.id/uploads/${_foundIstilah[index].file}",
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    "https://kamus-istilah-it.my.id/uploads/${_foundIstilah[index].file}", // Ganti dengan properti URL gambar Anda
+                                                placeholder: (context, url) =>
+                                                    Shimmer.fromColors(
+                                                  baseColor: Colors.grey[300]!,
+                                                  highlightColor:
+                                                      Colors.grey[100]!,
+                                                  child: Container(
+                                                    width:
+                                                        100, // Sesuaikan ukuran placeholder
+                                                    height:
+                                                        100, // Sesuaikan ukuran placeholder
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Icon(Icons.error),
+                                                width:
+                                                    100, // Sesuaikan ukuran gambar
+                                                height:
+                                                    100, // Sesuaikan ukuran gambar
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Text(
-                                          "Deskripsi:",
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(
-                                          height: 3,
-                                        ),
-                                        Text(
-                                          _foundIstilah[index].deskripsi,
-                                          style: TextStyle(
-                                            fontSize: 13,
+                                          SizedBox(
+                                            height: 15,
                                           ),
-                                        ),
-                                      ],
+                                          Text(
+                                            "Istilah:",
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          SizedBox(
+                                            height: 3,
+                                          ),
+                                          Text(
+                                            _foundIstilah[index].namaIstilah,
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          Text(
+                                            "Deskripsi:",
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          SizedBox(
+                                            height: 3,
+                                          ),
+                                          Text(
+                                            _foundIstilah[index].deskripsi,
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           );
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 1.0, horizontal: 2.0),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const Icon(
-                                Icons.book,
-                                color: Colors.grey,
-                                size: 13,
+                              CachedNetworkImage(
+                                imageUrl:
+                                    "https://kamus-istilah-it.my.id/uploads/${_foundIstilah[index].file}", // Ganti dengan properti URL gambar Anda
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                  child: Container(
+                                    width: 30, // Sesuaikan ukuran placeholder
+                                    height: 30, // Sesuaikan ukuran placeholder
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                                width: 30, // Sesuaikan ukuran gambar
+                                height: 30, // Sesuaikan ukuran gambar
                               ),
                               const SizedBox(
-                                width: 6,
+                                width: 8,
                               ),
                               Text(
                                 _foundIstilah[index].namaIstilah,
@@ -176,6 +238,30 @@ class _DaftarIstilahPageState extends State<DaftarIstilahPage> {
                     ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class FullScreenImage extends StatelessWidget {
+  final String imageUrl;
+
+  FullScreenImage({required this.imageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Center(
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(Icons.error),
         ),
       ),
     );

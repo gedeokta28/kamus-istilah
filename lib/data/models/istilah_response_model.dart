@@ -27,16 +27,19 @@ class IstilahData {
     required this.idistilah,
     required this.namaIstilah,
     required this.deskripsi,
+    required this.file,
   });
 
   final String idistilah;
   final String namaIstilah;
   final String deskripsi;
+  final String file;
 
   factory IstilahData.fromJson(Map<String, dynamic> json) => IstilahData(
         idistilah: json["idistilah"],
         namaIstilah: json["nama_istilah"],
         deskripsi: json["deskripsi"],
+        file: json["file"],
       );
 
   Map<String, dynamic> toJson() => {};
